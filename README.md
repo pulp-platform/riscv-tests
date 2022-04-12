@@ -41,21 +41,39 @@ differences between alternative implementations by defining:
 The following table shows the TVMs currently defined for RISC-V. All of these
 TVMs only support a single hardware thread.
 
-TVM Name | Description
---- | ---
-`rv32ui` | RV32 user-level, integer only
-`rv32ua` | RV32 user-level, atomic
-`rv32uc` | RV32 user-level, compressed
-`rv32ud` | RV32 user-level, double-precision
-`rv32uf` | RV32 user-level, floating-point
-`rv32um` | RV32 user-level, integer mul/div
-`rv32uxpulpimg` | RV32 user-level, Xpulpimg extension
-`rv32si` | RV32 supervisor-level, integer only
-`rv64ui` | RV64 user-level, integer only
-`rv64uf` | RV64 user-level, integer and floating-point
-`rv64uv` | RV64 user-level, integer, floating-point, and vector
-`rv64si` | RV64 supervisor-level, integer only
-`rv64sv` | RV64 supervisor-level, integer and vector
+| TVM Name                    | Description                                          |
+| --------------------------- | ---------------------------------------------------- |
+| `rv32ui`                    | RV32 user-level, integer only                        |
+| `rv32ua`                    | RV32 user-level, atomic                              |
+| `rv32uc`                    | RV32 user-level, compressed                          |
+| `rv32ud`                    | RV32 user-level, double-precision                    |
+| `rv32uf`                    | RV32 user-level, floating-point                      |
+| `rv32um`                    | RV32 user-level, integer mul/div                     |
+| `rv32uxpulpabs`             | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpbitop`           | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpbr`              | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpclip`            | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpmacsi`           | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpminmax`          | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulppostmod`         | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpslet`            | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpvect`            | RV32 user-level, Xpulp extension subset              |
+| `rv32uxpulpvectshufflepack` | RV32 user-level, Xpulp extension subset              |
+| WIP                         | add further RV32 Xpulp extension subsets             |
+| `rv32si`                    | RV32 supervisor-level, integer only                  |
+| `rv32mi`                    | RV32 machine-level, integer only                     |
+| `rv64ui`                    | RV64 user-level, integer only                        |
+| `rv64uf`                    | RV64 user-level, integer and floating-point          |
+| `rv64uv`                    | RV64 user-level, integer, floating-point, and vector |
+| `rv64ua`                    | RV64 user-level, atomic                              |
+| `rv64uc`                    | RV64 user-level, compressed                          |
+| `rv64ud`                    | RV64 user-level, double-precision                    |
+| `rv64uf`                    | RV64 user-level, floating-point                      |
+| `rv64um`                    | RV64 user-level, integer mul/div                     |
+| `rv64si`                    | RV64 supervisor-level, integer only                  |
+| `rv64sv`                    | RV64 supervisor-level, integer and vector            |
+| `rv64mi`                    | RV64 machine-level, integer only                     |
+
 
 A test program for RISC-V is written within a single assembly language file,
 which is passed through the C preprocessor, and all regular assembly
@@ -67,12 +85,12 @@ of the various TVMs is to allow the same test program to be compiled and run
 on very different target environments yet still produce the same results. The
 following table shows the target environment currently defined.
 
-Target Environment Name | Description
---- | ---
-`p` | virtual memory is disabled, only core 0 boots up
-`pm` | virtual memory is disabled, all cores boot up
-`pt` | virtual memory is disabled, timer interrupt fires every 100 cycles
-`v` | virtual memory is enabled
+| Target Environment Name | Description                                                        |
+| ----------------------- | ------------------------------------------------------------------ |
+| `p`                     | virtual memory is disabled, only core 0 boots up                   |
+| `pm`                    | virtual memory is disabled, all cores boot up                      |
+| `pt`                    | virtual memory is disabled, timer interrupt fires every 100 cycles |
+| `v`                     | virtual memory is enabled                                          |
 
 Each test program must next specify for which TVM it is designed by including
 the appropriate TVM macro, `RVTEST_RV64U` in this example. This specification
