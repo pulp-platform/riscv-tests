@@ -32,6 +32,7 @@ include $(src_dir)/rv32uxpulpbitop/Makefrag
 include $(src_dir)/rv32uxpulpbr/Makefrag
 include $(src_dir)/rv32uxpulpclip/Makefrag
 include $(src_dir)/rv32uxpulpmacsi/Makefrag
+include $(src_dir)/rv32uxpulpmacrnhi/Makefrag
 include $(src_dir)/rv32uxpulpminmax/Makefrag
 include $(src_dir)/rv32uxpulppostmod/Makefrag
 include $(src_dir)/rv32uxpulpslet/Makefrag
