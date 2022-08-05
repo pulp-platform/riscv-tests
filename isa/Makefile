@@ -27,6 +27,7 @@ include $(src_dir)/rv32ud/Makefrag
 include $(src_dir)/rv32uzfh/Makefrag
 include $(src_dir)/rv32si/Makefrag
 include $(src_dir)/rv32mi/Makefrag
+include $(src_dir)/rv32uxpulphwloop/Makefrag
 include $(src_dir)/rv32uxpulpabs/Makefrag
 include $(src_dir)/rv32uxpulpbitop/Makefrag
 include $(src_dir)/rv32uxpulpbr/Makefrag
@@ -78,7 +79,7 @@ vpath %.S $(src_dir)
 define compile_template
 
 $$($(1)_p_tests): $(1)-p-%: $(1)/%.S
-	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(src_dir)/../env/p -I$(src_dir)/macros/scalar -T$(src_dir)/../env/p/link.ld $$< -o $$@
+	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(src_dir)/../env/p -I$(src_dir)/macros/scalar -T$(src_dir)/../env/p/link.ld $(src_dir)/../env/encoding.h $$< -o $$@
 $(1)_tests += $$($(1)_p_tests)
 
 $$($(1)_v_tests): $(1)-v-%: $(1)/%.S
@@ -108,6 +109,7 @@ $(eval $(call compile_template,rv32ud,-march=rv32g -mabi=ilp32))
 $(eval $(call compile_template,rv32uzfh,-march=rv32g_zfh -mabi=ilp32))
 $(eval $(call compile_template,rv32si,-march=rv32g -mabi=ilp32))
 $(eval $(call compile_template,rv32mi,-march=rv32g -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulphwloop,-march=rv32gxpulphwloop -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpabs,-march=rv32gxpulpabs -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpbitop,-march=rv32gxpulpbitop -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpbr,-march=rv32gxpulpbr -mabi=ilp32))

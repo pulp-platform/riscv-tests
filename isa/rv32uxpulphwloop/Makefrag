@@ -1,0 +1,12 @@
+#=======================================================================
+# Makefrag for rv32uxpulpclip tests
+#-----------------------------------------------------------------------
+
+rv32uxpulphwloop_sc_tests = \
+  lp_count lp_counti \
+  lp_endi lp_starti \
+  hwloop
+
+rv32uxpulphwloop_p_tests = $(addprefix rv32uxpulphwloop-p-, $(rv32uxpulphwloop_sc_tests))
+
+spike32_tests += $(rv32uxpulphwloop_p_tests)

@@ -43,6 +43,7 @@ test_ ## testnum: \
 #-----------------------------------------------------------------------
 
 #define SEXT_IMM(x) ((x) | (-(((x) >> 11) & 1) << 11))
+#define ZEXT_IMM(x) ((x) & 0xFFF)
 
 #define TEST_IMM_OP( testnum, inst, result, val1, imm ) \
     TEST_CASE( testnum, x14, result, \
