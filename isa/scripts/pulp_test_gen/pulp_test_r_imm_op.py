@@ -142,7 +142,11 @@ class pulp_test_r_imm_op(pulp_test_op):
 
         for macro in self.zero_reg_macros:
             for i in range(num_per):
-                args["src1"] = random.randint(*self.minmax[0])
+                if "ZEROSRC1" in macro.name:
+                    args["src1"] = 0
+                else:
+                    args["src1"] = random.randint(*self.minmax[0])
+
                 args["imm1"] = random.randint(*self.minmax[1])
                 args["res"] = self.operation(args["src1"], args["imm1"])
                 self.zero_reg_tests += macro.fill(args) + "\n"
@@ -155,7 +159,8 @@ class pulp_test_r_imm_op(pulp_test_op):
 
 
 class pulp_test_r_uimm5_op(pulp_test_r_imm_op):
-    def __init__(self, mnemonic: str):
+    def __init__(self, mnemonic: str, res_format = "0x{:08x}", 
+                 src1_format = "0x{:08x}", imm1_format = "0x{:03x}"):
         '''
             Implements the test-generator of a generic operation (one reg and one 5bit-uint imm operand)
             Uses the template and macros in test_macros.h to check the
@@ -167,7 +172,7 @@ class pulp_test_r_uimm5_op(pulp_test_r_imm_op):
             Parameters:
                 mnemonic (str): Assembler mnemonic of operation
         '''
-        super().__init__(mnemonic, imm1_format = "0x{:02x}")
+        super().__init__(mnemonic, res_format, src1_format, imm1_format)
 
         imm_type = "UIMM5"
         self.minmax[1] = (0, 0x01F)
@@ -175,8 +180,8 @@ class pulp_test_r_uimm5_op(pulp_test_r_imm_op):
         for macro in self.bypass_macros:
             macro.name = macro.name.replace("IMM", imm_type)
 
-        self.arith_macro = self.arith_macro.replace("IMM", imm_type)
-        self.src_dest_macro = self.src_dest_macro.replace("IMM", imm_type)
+        self.arith_macro.name = self.arith_macro.name.replace("IMM", imm_type)
+        self.src_dest_macro.name = self.src_dest_macro.name.replace("IMM", imm_type)
 
         for macro in self.zero_reg_macros:
             macro.name = macro.name.replace("IMM", imm_type)
@@ -184,7 +189,8 @@ class pulp_test_r_uimm5_op(pulp_test_r_imm_op):
 
 
 class pulp_test_r_uimm6_op(pulp_test_r_imm_op):
-    def __init__(self, mnemonic: str):
+    def __init__(self, mnemonic: str, res_format = "0x{:08x}", 
+                 src1_format = "0x{:08x}", imm1_format = "0x{:03x}"):
         '''
             Implements the test-generator of a generic operation (one reg and one 6bit-uint imm operand)
             Uses the template and macros in test_macros.h to check the
@@ -196,7 +202,7 @@ class pulp_test_r_uimm6_op(pulp_test_r_imm_op):
             Parameters:
                 mnemonic (str): Assembler mnemonic of operation
         '''
-        super().__init__(mnemonic, imm1_format = "0x{:02x}")
+        super().__init__(mnemonic, res_format, src1_format, imm1_format)
 
         imm_type = "UIMM6"
         self.minmax[1] = (0, 0x03F)
@@ -204,8 +210,8 @@ class pulp_test_r_uimm6_op(pulp_test_r_imm_op):
         for macro in self.bypass_macros:
             macro.name = macro.name.replace("IMM", imm_type)
 
-        self.arith_macro = self.arith_macro.replace("IMM", imm_type)
-        self.src_dest_macro = self.src_dest_macro.replace("IMM", imm_type)
+        self.arith_macro.name = self.arith_macro.name.replace("IMM", imm_type)
+        self.src_dest_macro.name = self.src_dest_macro.name.replace("IMM", imm_type)
 
         for macro in self.zero_reg_macros:
             macro.name = macro.name.replace("IMM", imm_type)
@@ -213,7 +219,8 @@ class pulp_test_r_uimm6_op(pulp_test_r_imm_op):
 
 
 class pulp_test_r_simm6_op(pulp_test_r_imm_op):
-    def __init__(self, mnemonic: str):
+    def __init__(self, mnemonic: str, res_format = "0x{:08x}", 
+                 src1_format = "0x{:08x}", imm1_format = "0x{:03x}"):
         '''
             Implements the test-generator of a generic operation (one reg and one 6bit-int imm operand)
             Uses the template and macros in test_macros.h to check the
@@ -225,7 +232,7 @@ class pulp_test_r_simm6_op(pulp_test_r_imm_op):
             Parameters:
                 mnemonic (str): Assembler mnemonic of operation
         '''
-        super().__init__(mnemonic, imm1_format = "0x{:02x}")
+        super().__init__(mnemonic, res_format, src1_format, imm1_format)
 
         imm_type = "SIMM6"
         self.minmax[1] = (-0x020, 0x01F)
@@ -233,8 +240,8 @@ class pulp_test_r_simm6_op(pulp_test_r_imm_op):
         for macro in self.bypass_macros:
             macro.name = macro.name.replace("IMM", imm_type)
 
-        self.arith_macro = self.arith_macro.replace("IMM", imm_type)
-        self.src_dest_macro = self.src_dest_macro.replace("IMM", imm_type)
+        self.arith_macro.name = self.arith_macro.name.replace("IMM", imm_type)
+        self.src_dest_macro.name = self.src_dest_macro.name.replace("IMM", imm_type)
 
         for macro in self.zero_reg_macros:
             macro.name = macro.name.replace("IMM", imm_type)

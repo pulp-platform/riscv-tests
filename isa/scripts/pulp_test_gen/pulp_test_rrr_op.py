@@ -31,7 +31,7 @@ class pulp_test_rrr_op(pulp_test_op):
         self.src_dest_macros = [test_macro("TEST_RRR_SRC1_EQ_DEST", args_format), # enforce src1 = src3!
                                 test_macro("TEST_RRR_SRC2_EQ_DEST", args_format)] # enforce src2 = src3!
 
-        self.args_format.pop("src2")
+        args_format.pop("src2")
         self.src_dest_macros.append(test_macro("TEST_RRR_SRC12_EQ_DEST", args_format)) # enforce src1 = src2 = src3!
 
 
@@ -168,7 +168,7 @@ class pulp_test_rrr_op(pulp_test_op):
                         args["nops2"] = nops2
                         args["src1"] = random.randint(*self.minmax[0])
                         args["src2"] = random.randint(*self.minmax[1])
-                        args["src2"] = random.randint(*self.minmax[2])
+                        args["src3"] = random.randint(*self.minmax[2])
                         args["res"] = self.operation(args["src1"], args["src2"], args["src3"])
                         self.bypass_tests += macro.fill(args) + "\n"
                         args["testnum"] += 1
@@ -181,7 +181,7 @@ class pulp_test_rrr_op(pulp_test_op):
                     args["nops1"] = nops1
                     args["src1"] = random.randint(*self.minmax[0])
                     args["src2"] = random.randint(*self.minmax[1])
-                    args["src2"] = random.randint(*self.minmax[2])
+                    args["src3"] = random.randint(*self.minmax[2])
                     args["res"] = self.operation(args["src1"], args["src2"], args["src3"])
                     self.src_dest_tests += macro.fill(args) + "\n"
                     args["testnum"] += 1
@@ -203,7 +203,7 @@ class pulp_test_rrr_op(pulp_test_op):
             for i in range(num_per):
                 args["src1"] = random.randint(*self.minmax[0])
                 args["src2"] = random.randint(*self.minmax[1])
-                args["src2"] = random.randint(*self.minmax[2])
+                args["src3"] = random.randint(*self.minmax[2])
 
                 macro_name = macro.name
 

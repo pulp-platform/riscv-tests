@@ -22,14 +22,14 @@ class pulp_test_rr_op(pulp_test_op):
         self.minmax.append((0, 0xFFFFFFFF))
 
         args_format = OrderedDict([("testnum", "{:d}"), ("op", "{:s}"), 
-                                   ("res", res_format), ("src1", "0x{:08x}"), ("src2", "0x{:08x}")])
+                                   ("res", res_format), ("src1", src1_format), ("src2", src2_format)])
         self.arith_macro = test_macro("TEST_RR_OP", args_format)
 
 
         self.src_dest_macros = [test_macro("TEST_RR_SRC1_EQ_DEST", args_format),
                                 test_macro("TEST_RR_SRC2_EQ_DEST", args_format)]
 
-        self.args_format.pop("src2")
+        args_format.pop("src2")
         self.src_dest_macros.append(test_macro("TEST_RR_SRC12_EQ_DEST", args_format)) # enforce src1 = src2!
 
 
@@ -153,7 +153,7 @@ class pulp_test_rr_op(pulp_test_op):
 
             self.bypass_tests += "\n"
 
-        macro = self.bypass_tests[2] # dest-reg bypassed
+        macro = self.bypass_macros[2] # dest-reg bypassed
         for i in range(num_per):
             for nops1 in range(self.maxnops +1):
                 args["nops1"] = nops1
