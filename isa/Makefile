@@ -30,6 +30,7 @@ include $(src_dir)/rv32mi/Makefrag
 include $(src_dir)/rv32uxpulphwloop/Makefrag
 include $(src_dir)/rv32uxpulpabs/Makefrag
 include $(src_dir)/rv32uxpulpbitop/Makefrag
+# include $(src_dir)/rv32uxpulpbitrev/Makefrag # xpulpbitrev is missing from gcc -> can't compile
 include $(src_dir)/rv32uxpulpbr/Makefrag
 include $(src_dir)/rv32uxpulpclip/Makefrag
 include $(src_dir)/rv32uxpulpmacsi/Makefrag
@@ -112,6 +113,7 @@ $(eval $(call compile_template,rv32mi,-march=rv32g -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulphwloop,-march=rv32gxpulphwloop -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpabs,-march=rv32gxpulpabs -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpbitop,-march=rv32gxpulpbitop -mabi=ilp32))
+# $(eval $(call compile_template,rv32uxpulpbitrev,-march=rv32gxpulpbitrev -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpbr,-march=rv32gxpulpbr -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpclip,-march=rv32gxpulpclip -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpmacsi,-march=rv32gxpulpmacsi -mabi=ilp32))
