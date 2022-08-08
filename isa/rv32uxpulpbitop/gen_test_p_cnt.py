@@ -12,7 +12,6 @@ class pulp_test_p_cnt(pulp_test_r_op):
         
         
     def operation(self, src1: int) -> int:
-        bits = bitstring.BitArray(32)
         bits = bitstring.pack('uint:32', src1)
         
         res = bits.count(True)
