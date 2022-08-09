@@ -3,8 +3,19 @@
 #-----------------------------------------------------------------------
 
 rv32uxpulpvectshufflepack_sc_tests = \
-  pv_shuffle2 \
-#  pv_shuffle \
+  pv_shuffle_h \
+  pv_shuffle_sci_h \
+  pv_shuffle_b \
+  pv_shufflei0_sci_b \
+  pv_shufflei1_sci_b \
+  pv_shufflei2_sci_b \
+  pv_shufflei3_sci_b \
+  pv_shuffle2_h \
+  pv_shuffle2_b \
+  pv_pack \
+  pv_pack_h \
+  pv_packhi_b \
+  pv_packlo_b \
 
 rv32uxpulpvectshufflepack_p_tests = $(addprefix rv32uxpulpvectshufflepack-p-, $(rv32uxpulpvectshufflepack_sc_tests))
 rv32uxpulpvectshufflepack_v_tests = $(addprefix rv32uxpulpvectshufflepack-v-, $(rv32uxpulpvectshufflepack_sc_tests))
