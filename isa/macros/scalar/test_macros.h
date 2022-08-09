@@ -624,6 +624,100 @@ test_ ## testnum: \
     )
 
 #-----------------------------------------------------------------------
+# Tests for an instruction with register-register-uimm5 operands
+#-----------------------------------------------------------------------
+
+#define TEST_RR_UIMM5_OP( testnum, inst, result, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x14, result, \
+      li  x1, MASK_XLEN(val1); \
+      li  x2, MASK_XLEN(val2); \
+      inst x14, x1, x2, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_SRC1_EQ_DEST( testnum, inst, result, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x1, result, \
+      li  x1, MASK_XLEN(val1); \
+      li  x2, MASK_XLEN(val2); \
+      inst x1, x1, x2, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_SRC2_EQ_DEST( testnum, inst, result, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x2, result, \
+      li  x1, MASK_XLEN(val1); \
+      li  x2, MASK_XLEN(val2); \
+      inst x2, x1, x2, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_SRC12_EQ_DEST( testnum, inst, result, val1, imm1 ) \
+    TEST_CASE( testnum, x1, result, \
+      li  x1, MASK_XLEN(val1); \
+      inst x1, x1, x1, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_DEST_BYPASS( testnum, nop_cycles, inst, result, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x6, result, \
+      li  x4, 0; \
+1:    li  x1, MASK_XLEN(val1); \
+      li  x2, MASK_XLEN(val2); \
+      inst x14, x1, x2, ZEXT_UIMM5(imm1); \
+      TEST_INSERT_NOPS_ ## nop_cycles \
+      addi  x6, x14, 0; \
+      addi  x4, x4, 1; \
+      li  x5, 2; \
+      bne x4, x5, 1b \
+    )
+
+#define TEST_RR_UIMM5_SRC12_BYPASS( testnum, src1_nops, src2_nops, inst, result, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x14, result, \
+      li  x4, 0; \
+1:    li  x1, MASK_XLEN(val1); \
+      TEST_INSERT_NOPS_ ## src1_nops \
+      li  x2, MASK_XLEN(val2); \
+      TEST_INSERT_NOPS_ ## src2_nops \
+      inst x14, x1, x2, ZEXT_UIMM5(imm1); \
+      addi  x4, x4, 1; \
+      li  x5, 2; \
+      bne x4, x5, 1b \
+    )
+
+#define TEST_RR_UIMM5_SRC21_BYPASS( testnum, src1_nops, src2_nops, inst, result, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x14, result, \
+      li  x4, 0; \
+1:    li  x2, MASK_XLEN(val2); \
+      TEST_INSERT_NOPS_ ## src1_nops \
+      li  x1, MASK_XLEN(val1); \
+      TEST_INSERT_NOPS_ ## src2_nops \
+      inst x14, x1, x2, ZEXT_UIMM5(imm1); \
+      addi  x4, x4, 1; \
+      li  x5, 2; \
+      bne x4, x5, 1b \
+    )
+
+#define TEST_RR_UIMM5_ZEROSRC1( testnum, inst, result, val, imm1 ) \
+    TEST_CASE( testnum, x2, result, \
+      li x1, MASK_XLEN(val); \
+      inst x2, x0, x1, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_ZEROSRC2( testnum, inst, result, val, imm1 ) \
+    TEST_CASE( testnum, x2, result, \
+      li x1, MASK_XLEN(val); \
+      inst x2, x1, x0, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_ZEROSRC12( testnum, inst, result, imm1 ) \
+    TEST_CASE( testnum, x1, result, \
+      inst x1, x0, x0, ZEXT_UIMM5(imm1); \
+    )
+
+#define TEST_RR_UIMM5_ZERODEST( testnum, inst, val1, val2, imm1 ) \
+    TEST_CASE( testnum, x0, 0, \
+      li x1, MASK_XLEN(val1); \
+      li x2, MASK_XLEN(val2); \
+      inst x0, x1, x2, ZEXT_UIMM5(imm1); \
+    )
+
+#-----------------------------------------------------------------------
 # Tests for instructions with 3 register operands
 #-----------------------------------------------------------------------
 
