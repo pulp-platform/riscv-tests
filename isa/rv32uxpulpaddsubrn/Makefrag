@@ -1,0 +1,18 @@
+#=======================================================================
+# Makefrag for rv32uxpulpaddsubrn tests
+#-----------------------------------------------------------------------
+
+rv32uxpulpaddsubrn_sc_tests = \
+  p_addN p_adduN \
+  p_addRN p_adduRN \
+  p_subN p_subuN \
+  p_subRN p_subuRN \
+  p_addNr p_adduNr \
+  p_addRNr p_adduRNr \
+  p_subNr p_subuNr \
+  p_subRNr p_subuRNr \
+
+rv32uxpulpaddsubrn_p_tests = $(addprefix rv32uxpulpaddsubrn-p-, $(rv32uxpulpaddsubrn_sc_tests))
+# rv32uxpulpaddsubrn_v_tests = $(addprefix rv32uxpulpaddsubrn-v-, $(rv32uxpulpaddsubrn_sc_tests))
+
+spike32_tests += $(rv32uxpulpaddsubrn_p_tests) # $(rv32uxpulpaddsubrn_v_tests)
