@@ -1,0 +1,114 @@
+# See LICENSE for license details.
+
+#*****************************************************************************
+# p.muluN
+#-----------------------------------------------------------------------------
+#
+# Test p.muluN instruction.
+# 
+#
+
+#include "riscv_test.h"
+#include "test_macros.h"
+
+RVTEST_RV32U
+RVTEST_CODE_BEGIN
+
+  #-------------------------------------------------------------
+  # Arithmetic tests
+  #-------------------------------------------------------------
+  TEST_RR_UIMM5_OP( 2, p.muluN, 0, 0, 0, 0 )
+  TEST_RR_UIMM5_OP( 3, p.muluN, 0, 0, 0, 31 )
+  TEST_RR_UIMM5_OP( 4, p.muluN, 0, 0, 1, 0 )
+  TEST_RR_UIMM5_OP( 5, p.muluN, 0, 1, 0, 0 )
+  TEST_RR_UIMM5_OP( 6, p.muluN, 65535, 65535, 1, 0 )
+  TEST_RR_UIMM5_OP( 7, p.muluN, 65535, 65535, 1, 0 )
+  TEST_RR_UIMM5_OP( 8, p.muluN, 1, 65535, 65535, 31 )
+  TEST_RR_UIMM5_OP( 9, p.muluN, 4294836225, 65535, 65535, 0 )
+  TEST_RR_UIMM5_OP( 10, p.muluN, 1, 2147418113, 1, 0 )
+  TEST_RR_UIMM5_OP( 11, p.muluN, 32767, 98303, 1, 0 )
+  TEST_RR_UIMM5_OP( 12, p.muluN, 1, 1, 2147418113, 0 )
+  TEST_RR_UIMM5_OP( 13, p.muluN, 32767, 1, 98303, 0 )
+  TEST_RR_UIMM5_OP( 14, p.muluN, 1154, 1418986913, 1750600914, 12 )
+  TEST_RR_UIMM5_OP( 15, p.muluN, 112266, 952550469, 3249342704, 10 )
+  TEST_RR_UIMM5_OP( 16, p.muluN, 1, 354643602, 2493241183, 30 )
+  TEST_RR_UIMM5_OP( 17, p.muluN, 1240, 1046322011, 2151235551, 19 )
+  TEST_RR_UIMM5_OP( 18, p.muluN, 346, 2186192002, 3771474350, 20 )
+  TEST_RR_UIMM5_OP( 19, p.muluN, 80678378, 389685119, 2208638742, 0 )
+  TEST_RR_UIMM5_OP( 20, p.muluN, 1088, 2257698811, 1916406614, 17 )
+  TEST_RR_UIMM5_OP( 21, p.muluN, 85732, 2672100608, 790398453, 9 )
+  TEST_RR_UIMM5_OP( 22, p.muluN, 161364, 2975666373, 330320685, 9 )
+  TEST_RR_UIMM5_OP( 23, p.muluN, 1015, 826065514, 3478693667, 21 )
+  
+
+  #-------------------------------------------------------------
+  # Source/Destination tests
+  #-------------------------------------------------------------
+  TEST_RR_UIMM5_SRC1_EQ_DEST( 24, p.muluN, 1044, 4203846366, 1958664162, 21 )
+  TEST_RR_UIMM5_SRC1_EQ_DEST( 25, p.muluN, 325854846, 4147320691, 3784496138, 0 )
+  
+  TEST_RR_UIMM5_SRC2_EQ_DEST( 26, p.muluN, 1, 1961037397, 1889154335, 25 )
+  TEST_RR_UIMM5_SRC2_EQ_DEST( 27, p.muluN, 7075, 3236292346, 3407410447, 19 )
+  
+  TEST_RR_UIMM5_SRC12_EQ_DEST( 28, p.muluN, 5876, 3949087913, 16 )
+  TEST_RR_UIMM5_SRC12_EQ_DEST( 29, p.muluN, 16184529, 3518004664, 6 )
+  
+  TEST_RR_UIMM5_DEST_BYPASS( 48, 0, p.muluN, 3, 3933075249, 3933075249, 30 )
+  TEST_RR_UIMM5_DEST_BYPASS( 49, 1, p.muluN, 144584, 3253845535, 3253845535, 14 )
+  TEST_RR_UIMM5_DEST_BYPASS( 50, 2, p.muluN, 10, 2491272642, 2491272642, 28 )
+  TEST_RR_UIMM5_DEST_BYPASS( 51, 0, p.muluN, 14, 1929639027, 1929639027, 28 )
+  TEST_RR_UIMM5_DEST_BYPASS( 52, 1, p.muluN, 217418, 2907219163, 2907219163, 13 )
+  TEST_RR_UIMM5_DEST_BYPASS( 53, 2, p.muluN, 1, 3543828109, 3543828109, 30 )
+  
+
+  #-------------------------------------------------------------
+  # Bypassing tests
+  #-------------------------------------------------------------
+  TEST_RR_UIMM5_SRC12_BYPASS( 30, 0, 0, p.muluN, 0, 3705605734, 3825614680, 31 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 31, 0, 1, p.muluN, 72790531, 898636257, 4161579949, 2 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 32, 0, 2, p.muluN, 40, 1436759366, 3714434108, 24 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 33, 1, 0, p.muluN, 1, 2297951771, 57884647, 29 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 34, 1, 1, p.muluN, 13, 410043783, 101131128, 25 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 35, 1, 2, p.muluN, 289721443, 2220863149, 274582136, 3 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 36, 2, 0, p.muluN, 48660, 2126367339, 102166629, 16 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 37, 2, 1, p.muluN, 7, 501918371, 857609911, 25 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 38, 2, 2, p.muluN, 5286561, 2217124440, 1718714164, 8 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 39, 0, 0, p.muluN, 227, 4163281337, 1482447409, 22 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 40, 0, 1, p.muluN, 258039, 2282372583, 842678562, 10 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 41, 0, 2, p.muluN, 544729, 1153804254, 1646749032, 11 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 42, 1, 0, p.muluN, 71, 1569625261, 3998629185, 23 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 43, 1, 1, p.muluN, 0, 3997085365, 1416641343, 30 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 44, 1, 2, p.muluN, 46, 1493593072, 2298899866, 24 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 45, 2, 0, p.muluN, 0, 1929970140, 4023274719, 26 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 46, 2, 1, p.muluN, 11773323, 2471278546, 2812809123, 4 )
+  TEST_RR_UIMM5_SRC12_BYPASS( 47, 2, 2, p.muluN, 292517, 4221935281, 1244391018, 13 )
+  
+  
+
+  TEST_RR_UIMM5_ZEROSRC1( 54, p.muluN, 0, 244417301, 10 )
+  TEST_RR_UIMM5_ZEROSRC1( 55, p.muluN, 0, 3377774921, 12 )
+  
+  TEST_RR_UIMM5_ZEROSRC2( 56, p.muluN, 0, 272155760, 22 )
+  TEST_RR_UIMM5_ZEROSRC2( 57, p.muluN, 0, 3457742014, 9 )
+  
+  TEST_RR_UIMM5_ZEROSRC12( 58, p.muluN, 0, 20 )
+  TEST_RR_UIMM5_ZEROSRC12( 59, p.muluN, 0, 0 )
+  
+  TEST_RR_UIMM5_ZERODEST( 60, p.muluN, 3918458447, 3726232783, 14 )
+  TEST_RR_UIMM5_ZERODEST( 61, p.muluN, 134493330, 3128277739, 24 )
+  
+  
+
+  TEST_PASSFAIL
+
+# Input data section.
+RVTEST_CODE_END
+
+  .data
+
+# Output data section.
+RVTEST_DATA_BEGIN
+
+  TEST_DATA
+
+RVTEST_DATA_END

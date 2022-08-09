@@ -34,6 +34,7 @@ include $(src_dir)/rv32uxpulpbitop/Makefrag
 include $(src_dir)/rv32uxpulpbr/Makefrag
 include $(src_dir)/rv32uxpulpclip/Makefrag
 include $(src_dir)/rv32uxpulpmacsi/Makefrag
+include $(src_dir)/rv32uxpulpmulrnhi/Makefrag
 include $(src_dir)/rv32uxpulpmacrnhi/Makefrag
 include $(src_dir)/rv32uxpulpminmax/Makefrag
 include $(src_dir)/rv32uxpulppostmod/Makefrag
@@ -117,6 +118,7 @@ $(eval $(call compile_template,rv32uxpulpbitop,-march=rv32gxpulpbitop -mabi=ilp3
 $(eval $(call compile_template,rv32uxpulpbr,-march=rv32gxpulpbr -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpclip,-march=rv32gxpulpclip -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpmacsi,-march=rv32gxpulpmacsi -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpmulrnhi,-march=rv32gxpulpmulrnhi -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpmacrnhi,-march=rv32gxpulpmacrnhi -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpminmax,-march=rv32gxpulpminmax -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulppostmod,-march=rv32gxpulppostmod -mabi=ilp32))
