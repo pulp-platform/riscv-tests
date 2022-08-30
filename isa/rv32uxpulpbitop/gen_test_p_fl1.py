@@ -39,5 +39,5 @@ if __name__ == '__main__':
 
     p_fl1.gen_src_dest_tests(2)
     p_fl1.gen_bypass_tests(2)
-    #p_fl1.gen_zero_reg_tests(2)
+    p_fl1.gen_zero_reg_tests(2)
     p_fl1.write_asm()

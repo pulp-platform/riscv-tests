@@ -27,6 +27,14 @@ class pulp_test_r_op(pulp_test_op):
         self.arith_macro = test_macro("TEST_R_OP", args_format)
         self.src_dest_macro = test_macro("TEST_R_SRC1_EQ_DEST", args_format)
 
+        args_format = OrderedDict([("testnum", "{:d}"), ("op", "{:s}"), 
+                                   ("res", res_format)])
+        self.zero_reg_macros = [test_macro("TEST_R_ZEROSRC1", args_format)]
+        
+        args_format = OrderedDict([("testnum", "{:d}"), ("op", "{:s}"), 
+                                   ("src1", src1_format)])
+        self.zero_reg_macros.append(test_macro("TEST_R_ZERODEST", args_format))
+
 
     def operation(self, src1: int) -> int:
         '''
@@ -104,6 +112,32 @@ class pulp_test_r_op(pulp_test_op):
                 args["res"] = self.operation(args["src1"])
                 self.bypass_tests += self.bypass_macro.fill(args) + "\n"
                 args["testnum"] += 1
+
+        self.testnum = args["testnum"]
+
+
+    def gen_zero_reg_tests(self, num_per: int):
+        '''
+            Adds N randomly generated tests per macro to the test procedure, 
+            testing correctness if a src or dest register is the zero-register x0
+
+            Parameters:
+                num_per (int): number of tests to be added per macro
+        '''
+        args = {"testnum": self.testnum, "op": self.mnemonic}
+
+        for macro in self.zero_reg_macros:
+            for i in range(num_per):
+                if "ZEROSRC1" in macro.name:
+                    args["src1"] = 0
+                else:
+                    args["src1"] = random.randint(*self.minmax[0])
+
+                args["res"] = self.operation(args["src1"])
+                self.zero_reg_tests += macro.fill(args) + "\n"
+                args["testnum"] += 1
+
+            self.zero_reg_tests += "\n"
 
         self.testnum = args["testnum"]
 

@@ -66,6 +66,17 @@ test_ ## testnum: \
       bne x4, x5, 1b \
     )
 
+#define TEST_R_ZEROSRC1( testnum, inst, result ) \
+    TEST_CASE( testnum, x1, result, \
+      inst x1, x0; \
+    )
+
+#define TEST_R_ZERODEST( testnum, inst, val1 ) \
+    TEST_CASE( testnum, x0, 0, \
+      li  x1, MASK_XLEN(val1); \
+      inst x0, x1; \
+    )
+
 #-----------------------------------------------------------------------
 # Tests for instructions with 12-bit immediate operand
 #-----------------------------------------------------------------------

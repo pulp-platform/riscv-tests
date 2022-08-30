@@ -43,5 +43,5 @@ if __name__ == '__main__':
 
     p_clb.gen_src_dest_tests(2)
     p_clb.gen_bypass_tests(2)
-    #p_clb.gen_zero_reg_tests(2)
+    p_clb.gen_zero_reg_tests(2)
     p_clb.write_asm()

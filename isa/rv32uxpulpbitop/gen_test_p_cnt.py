@@ -32,5 +32,5 @@ if __name__ == '__main__':
 
     p_cnt.gen_src_dest_tests(2)
     p_cnt.gen_bypass_tests(2)
-    #p_cnt.gen_zero_reg_tests(2)
+    p_cnt.gen_zero_reg_tests(2)
     p_cnt.write_asm()
