@@ -2,26 +2,160 @@
 # Makefrag for rv32uxpulpvect tests
 #-----------------------------------------------------------------------
 
-rv32uxpulpvect_sc_tests = \
-  pv_add \
-  pv_sub \
-  pv_avg pv_avgu \
-  pv_min pv_minu \
-  pv_max pv_maxu \
-  pv_srl \
-  pv_sra \
-  pv_sll \
-  pv_or \
-  pv_xor \
-  pv_and \
-  pv_abs \
-  pv_extract pv_extractu \
-  pv_insert \
+rv32uxpulpvect_arith_sc_tests = \
+	pv_add_h \
+  pv_add_b \
+  pv_add_sc_h \
+  pv_add_sc_b \
+  pv_add_sci_h \
+  pv_add_sci_b \
+  pv_add_h_div2 \
+  pv_add_h_div4 \
+  pv_add_h_div8 \
+  pv_sub_h \
+  pv_sub_b \
+  pv_sub_sc_h \
+  pv_sub_sc_b \
+  pv_sub_sci_h \
+  pv_sub_sci_b \
+  pv_sub_h_div2 \
+  pv_sub_h_div4 \
+  pv_sub_h_div8 \
+  pv_avg_h \
+  pv_avg_b \
+  pv_avg_sc_h \
+  pv_avg_sc_b \
+  pv_avg_sci_h \
+  pv_avg_sci_b \
+  pv_avgu_h \
+  pv_avgu_b \
+  pv_avgu_sc_h \
+  pv_avgu_sc_b \
+  pv_avgu_sci_h \
+  pv_avgu_sci_b \
+  pv_min_h \
+  pv_min_b \
+  pv_min_sc_h \
+  pv_min_sc_b \
+  pv_min_sci_h \
+  pv_min_sci_b \
+  pv_minu_h \
+  pv_minu_b \
+  pv_minu_sc_h \
+  pv_minu_sc_b \
+  pv_minu_sci_h \
+  pv_minu_sci_b \
+  pv_max_h \
+  pv_max_b \
+  pv_max_sc_h \
+  pv_max_sc_b \
+  pv_max_sci_h \
+  pv_max_sci_b \
+  pv_maxu_h \
+  pv_maxu_b \
+  pv_maxu_sc_h \
+  pv_maxu_sc_b \
+  pv_maxu_sci_h \
+  pv_maxu_sci_b \
+  pv_abs_b \
+  pv_abs_h \
   pv_dotup \
   pv_dotusp \
   pv_dotsp \
   pv_sdotup \
   pv_sdotusp \
+  
+rv32uxpulpvect_bitmanip_sc_tests = \
+	pv_srl_h \
+  pv_srl_b \
+  pv_srl_sc_h \
+  pv_srl_sc_b \
+  pv_srl_sci_h \
+  pv_srl_sci_b \
+  pv_sra_h \
+  pv_sra_b \
+  pv_sra_sc_h \
+  pv_sra_sc_b \
+  pv_sra_sci_h \
+  pv_sra_sci_b \
+  pv_sll_h \
+  pv_sll_b \
+  pv_sll_sc_h \
+  pv_sll_sc_b \
+  pv_sll_sci_h \
+  pv_sll_sci_b \
+  pv_or \
+  pv_xor \
+  pv_and \
+  pv_extract pv_extractu \
+  pv_insert \
+  
+rv32uxpulpvect_compare_sc_tests = \
+pv_cmpeq_h \
+  pv_cmpeq_b \
+  pv_cmpeq_sc_h \
+  pv_cmpeq_sc_b \
+  pv_cmpeq_sci_h \
+  pv_cmpeq_sci_b \
+  pv_cmpne_h \
+  pv_cmpne_b \
+  pv_cmpne_sc_h \
+  pv_cmpne_sc_b \
+  pv_cmpne_sci_h \
+  pv_cmpne_sci_b \
+  pv_cmpgt_h \
+  pv_cmpgt_b \
+  pv_cmpgt_sc_h \
+  pv_cmpgt_sc_b \
+  pv_cmpgt_sci_h \
+  pv_cmpgt_sci_b \
+  pv_cmpgtu_h \
+  pv_cmpgtu_b \
+  pv_cmpgtu_sc_h \
+  pv_cmpgtu_sc_b \
+  pv_cmpgtu_sci_h \
+  pv_cmpgtu_sci_b \
+  pv_cmpge_h \
+  pv_cmpge_b \
+  pv_cmpge_sc_h \
+  pv_cmpge_sc_b \
+  pv_cmpge_sci_h \
+  pv_cmpge_sci_b \
+  pv_cmpgeu_h \
+  pv_cmpgeu_b \
+  pv_cmpgeu_sc_h \
+  pv_cmpgeu_sc_b \
+  pv_cmpgeu_sci_h \
+  pv_cmpgeu_sci_b \
+  pv_cmplt_h \
+  pv_cmplt_b \
+  pv_cmplt_sc_h \
+  pv_cmplt_sc_b \
+  pv_cmplt_sci_h \
+  pv_cmplt_sci_b \
+  pv_cmpltu_h \
+  pv_cmpltu_b \
+  pv_cmpltu_sc_h \
+  pv_cmpltu_sc_b \
+  pv_cmpltu_sci_h \
+  pv_cmpltu_sci_b \
+  pv_cmple_h \
+  pv_cmple_b \
+  pv_cmple_sc_h \
+  pv_cmple_sc_b \
+  pv_cmple_sci_h \
+  pv_cmple_sci_b \
+  pv_cmpleu_h \
+  pv_cmpleu_b \
+  pv_cmpleu_sc_h \
+  pv_cmpleu_sc_b \
+  pv_cmpleu_sci_h \
+  pv_cmpleu_sci_b \
+
+rv32uxpulpvect_sc_tests = \
+  $(rv32uxpulpvect_arith_sc_tests) \
+  $(rv32uxpulpvect_bitmanip_sc_tests) \
+  $(rv32uxpulpvect_compare_sc_tests) \
 
 rv32uxpulpvect_p_tests = $(addprefix rv32uxpulpvect-p-, $(rv32uxpulpvect_sc_tests))
 rv32uxpulpvect_v_tests = $(addprefix rv32uxpulpvect-v-, $(rv32uxpulpvect_sc_tests))
