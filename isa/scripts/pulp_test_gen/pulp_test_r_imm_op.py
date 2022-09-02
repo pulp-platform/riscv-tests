@@ -157,6 +157,22 @@ class pulp_test_r_imm_op(pulp_test_op):
         self.testnum = args["testnum"]
 
 
+    def gen_all_tests(self, num_arith: int, num_special: int):
+        '''
+            Adds randomly generated arithmetic and special tests
+            to the test procedure, less verbose option with a bit less control
+            compared to explicitly generating each group
+
+            Parameters:
+                num_arith (int):   number of arithmetic tests to be added
+                num_special (int): number of special tests to be added per test-macro
+        '''
+        self.gen_arith_tests(num_arith)
+        self.gen_src_dest_tests(num_special)
+        self.gen_bypass_tests(num_special)
+        self.gen_zero_reg_tests(num_special)
+
+
 
 class pulp_test_r_uimm5_op(pulp_test_r_imm_op):
     def __init__(self, mnemonic: str, res_format = "0x{:08x}", 
