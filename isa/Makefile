@@ -42,6 +42,7 @@ include $(src_dir)/rv32uxpulppostmod/Makefrag
 include $(src_dir)/rv32uxpulpslet/Makefrag
 include $(src_dir)/rv32uxpulpvect/Makefrag
 include $(src_dir)/rv32uxpulpvectshufflepack/Makefrag
+include $(src_dir)/rv32uxpulpvectcomplex/Makefrag
 
 default: all
 
@@ -127,6 +128,7 @@ $(eval $(call compile_template,rv32uxpulppostmod,-march=rv32gxpulppostmod -mabi=
 $(eval $(call compile_template,rv32uxpulpslet,-march=rv32gxpulpslet -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpvect,-march=rv32gxpulpvect -mabi=ilp32))
 $(eval $(call compile_template,rv32uxpulpvectshufflepack,-march=rv32gxpulpvectshufflepack -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpvectcomplex,-march=rv32gxpulpvectcomplex -mabi=ilp32))
 
 ifeq ($(XLEN),64)
 $(eval $(call compile_template,rv64ui,-march=rv64g -mabi=lp64))
