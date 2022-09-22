@@ -28,13 +28,13 @@ RVTEST_CODE_BEGIN
   li TESTNUM, 2
 1:
   # Activate CLIC mode
-  la t0, mtvec_handler
+  la t0, mtvec_handler_fail
   ori t0, t0, 0x3
   csrrw s0, mtvec, t0
 
   # Write mtvt base
   la t0, mtvt_handler
-  csrw 0x307, t0
+  csrw 0x307, t0 # mtvt
 
   # Set shv of irq 31
   li   t0, CLIC_CLICINTATTR_REG(31)
@@ -63,51 +63,96 @@ RVTEST_CODE_BEGIN
   sw   t1, 0(t0)
 
   # raise interrupt threshold to max and check that the interrupt doesn't fire yet
+  li   a0, 0x1
   li   t0, 0xff
-  csrw 0x347, t0
+  csrw 0x347, t0 # mintthresh
   li   t0, CLIC_CLICINTIE_REG(31)
   li   t1, 1
   sw   t1, 0(t0)
 
-  j pass_restore
+  # wait
+  li t0, 500
+1:
+  addi t0, t0, -1
+  bnez t0, 1b
+
+  # lower interrupt threshold (interrupt should happen)
+  li   a0, 0x0
+  li   t0, 0x0
+  csrw 0x347, t0 # mintthresh
+
+  # wait
+  li t0, 500
+2:
+  addi t0, t0, -1
+  bnez t0, 2b
+
+  j fail_restore
 
 pass_restore:
   csrw mtvec, s0
   j pass
 
+fail_restore:
+  csrw mtvec, s0
+  j fail
+
+thirtyone:
+  # a0=0: we should not get here, fail. else: we expect to get here, pass.
+  beqz a0, pass_restore
+  j fail_restore
+
   TEST_PASSFAIL
 
-  .align 6
+  .align 8
   .global mtvt_handler
 mtvt_handler:
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
-  j pass_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j thirtyone
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
+  j fail_restore
 
 
   .align 8
-  .global mtvec_handler
-mtvec_handler:
+  .global mtvec_handler_fail
+mtvec_handler_fail:
   # Restore mtvec and fail
   csrw mtvec, s0
   j fail
