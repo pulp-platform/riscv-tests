@@ -12,7 +12,7 @@
 
 #define xstr(s) str(s)
 #define str(s) s
-#define CLIC_BASE 0xD0000000
+#define CLIC_BASE 0x50000000
 #define CLIC_CLICCFG_REG         (CLIC_BASE + 0x0)
 #define CLIC_CLICINTIP_REG(id)   (CLIC_BASE + 0x1000 + 0x10 * id)
 #define CLIC_CLICINTIE_REG(id)   (CLIC_BASE + 0x1004 + 0x10 * id)
