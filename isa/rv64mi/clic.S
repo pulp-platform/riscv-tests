@@ -27,6 +27,9 @@ RVTEST_CODE_BEGIN
 
   li TESTNUM, 2
 1:
+  # Enable interrupts (set mstatus.mie)
+  csrsi mstatus, 0x8
+
   # Activate CLIC mode
   la t0, mtvec_handler_fail
   ori t0, t0, 0x3
