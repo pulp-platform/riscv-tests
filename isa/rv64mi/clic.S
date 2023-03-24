@@ -1,10 +1,10 @@
 # See LICENSE for license details.
 
 #*****************************************************************************
-# illegal.S
+# clic.S
 #-----------------------------------------------------------------------------
 #
-# Test illegal instruction trap.
+# Test clic.
 #
 
 #include "riscv_test.h"
@@ -12,12 +12,21 @@
 
 #define xstr(s) str(s)
 #define str(s) s
-#define CLIC_BASE 0x50000000
-#define CLIC_CLICCFG_REG         (CLIC_BASE + 0x0)
-#define CLIC_CLICINTIP_REG(id)   (CLIC_BASE + 0x1000 + 0x10 * id)
-#define CLIC_CLICINTIE_REG(id)   (CLIC_BASE + 0x1004 + 0x10 * id)
-#define CLIC_CLICINTATTR_REG(id) (CLIC_BASE + 0x1008 + 0x10 * id)
-#define CLIC_CLICINTCTL_REG(id)  (CLIC_BASE + 0x100c + 0x10 * id)
+#define CLIC_BASE                     0x50000000
+#define CLIC_CLICCFG_REG              (CLIC_BASE + 0x0)
+#define CLIC_CLICINT_REG(id)          (CLIC_BASE + 0x1000 + 0x4 * id)
+#define CLIC_CLICINT_IP_OFFSET        (0)
+#define CLIC_CLICINT_IP_MASK          (1)
+#define CLIC_CLICINT_IE_OFFSET        (7)
+#define CLIC_CLICINT_IE_MASK          (1)
+#define CLIC_CLICINT_ATTR_SHV_OFFSET  (16)
+#define CLIC_CLICINT_ATTR_SHV_MASK    (1)
+#define CLIC_CLICINT_ATTR_TRIG_OFFSET (17)
+#define CLIC_CLICINT_ATTR_TRIG_MASK   (0x3)
+#define CLIC_CLICINT_ATTR_MODE_OFFSET (22)
+#define CLIC_CLICINT_ATTR_MODE_MASK   (0x3)
+#define CLIC_CLICINT_CTL_OFFSET       (24)
+#define CLIC_CLICINT_CTL_MASK         (0xff)
 
 RVTEST_RV64M
 RVTEST_CODE_BEGIN
@@ -40,37 +49,44 @@ RVTEST_CODE_BEGIN
   csrw 0x307, t0 # mtvt
 
   # Set shv of irq 31
-  li   t0, CLIC_CLICINTATTR_REG(31)
-  li   t1, 1
+  li   t0, CLIC_CLICINT_REG(31)
+  li   t1, 1 << CLIC_CLICINT_ATTR_SHV_OFFSET
   sw   t1, 0(t0)
 
   # set trigger type to edge-triggered
-  li   t0, CLIC_CLICINTATTR_REG(31)
+  li   t0, CLIC_CLICINT_REG(31)
   lw   t1, 0(t0)
-  ori  t1, t1, 2
+  li   t2, 1 << CLIC_CLICINT_ATTR_TRIG_OFFSET
+  or   t1, t1, t2
   sw   t1, 0(t0)
 
   # enable irq31 via SW by writing to clicintip31
-  li   t0, CLIC_CLICINTIP_REG(31)
-  li   t1, 1
-  sb   t1, 0(t0)
+  li   t0, CLIC_CLICINT_REG(31)
+  lw   t1, 0(t0)
+  li   t2, 1 << CLIC_CLICINT_IP_OFFSET
+  or   t1, t1, t2
+  sw   t1, 0(t0)
 
   # set number of bits for level encoding
   li   t0, CLIC_CLICCFG_REG
   li   t1, 0x4 << 1
-  sb   t1, 0(t0)
+  sw   t1, 0(t0)
 
   # set interrupt level and priority for interrupt 31
-  li   t0, CLIC_CLICINTCTL_REG(31)
-  li   t1, 0xaa
+  li   t0, CLIC_CLICINT_REG(31)
+  lw   t1, 0(t0)
+  li   t2, 0xaa << CLIC_CLICINT_CTL_OFFSET
+  or   t1, t1, t2
   sw   t1, 0(t0)
 
   # raise interrupt threshold to max and check that the interrupt doesn't fire yet
   li   a0, 0x1
   li   t0, 0xff
   csrw 0x347, t0 # mintthresh
-  li   t0, CLIC_CLICINTIE_REG(31)
-  li   t1, 1
+  li   t0, CLIC_CLICINT_REG(31)
+  lw   t1, 0(t0)
+  li   t2, 1 << CLIC_CLICINT_IE_OFFSET
+  or   t1, t1, t2
   sw   t1, 0(t0)
 
   # wait
