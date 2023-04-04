@@ -12,7 +12,5 @@ rv64mi_sc_tests = \
 	ma_addr \
 	scall \
 	sbreak \
-	clic \
-	clic-multiple \
 
 rv64mi_p_tests = $(addprefix rv64mi-p-, $(rv64mi_sc_tests))
