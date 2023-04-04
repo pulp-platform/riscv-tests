@@ -1,0 +1,9 @@
+#=======================================================================
+# Makefrag for rv64msmclic tests
+#-----------------------------------------------------------------------
+
+rv64msmclic_sc_tests = \
+	clic \
+	clic-multiple \
+
+rv64msmclic_p_tests = $(addprefix rv64msmclic-p-, $(rv64msmclic_sc_tests))
