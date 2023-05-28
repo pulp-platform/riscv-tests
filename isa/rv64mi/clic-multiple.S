@@ -21,7 +21,7 @@
 #define CLIC_CLICINT_REG(id)          (CLIC_BASE + 0x1000 + 0x4 * id)
 #define CLIC_CLICINT_IP_OFFSET        (0)
 #define CLIC_CLICINT_IP_MASK          (1)
-#define CLIC_CLICINT_IE_OFFSET        (7)
+#define CLIC_CLICINT_IE_OFFSET        (8)
 #define CLIC_CLICINT_IE_MASK          (1)
 #define CLIC_CLICINT_ATTR_SHV_OFFSET  (16)
 #define CLIC_CLICINT_ATTR_SHV_MASK    (1)
