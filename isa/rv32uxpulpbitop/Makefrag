@@ -5,8 +5,15 @@
 rv32uxpulpbitop_sc_tests = \
   p_exths p_exthz \
   p_extbs p_extbz \
+  p_extract p_extractr \
+  p_extractu p_extractur \
+  p_insert p_insertr \
+  p_bset p_bsetr \
+  p_bclr p_bclrr \
+  p_ff1 p_fl1 p_clb \
+  p_cnt p_ror \
 
 rv32uxpulpbitop_p_tests = $(addprefix rv32uxpulpbitop-p-, $(rv32uxpulpbitop_sc_tests))
-rv32uxpulpbitop_v_tests = $(addprefix rv32uxpulpbitop-v-, $(rv32uxpulpbitop_sc_tests))
+# rv32uxpulpbitop_v_tests = $(addprefix rv32uxpulpbitop-v-, $(rv32uxpulpbitop_sc_tests))
 
-spike32_tests += $(rv32uxpulpbitop_p_tests) $(rv32uxpulpbitop_v_tests)
+spike32_tests += $(rv32uxpulpbitop_p_tests) # $(rv32uxpulpbitop_v_tests)

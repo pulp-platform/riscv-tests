@@ -1,0 +1,14 @@
+#=======================================================================
+# Makefrag for rv32uxpulpmulrnhi tests
+#-----------------------------------------------------------------------
+
+rv32uxpulpmulrnhi_sc_tests = \
+  p_mulsN p_muluN \
+  p_mulhhsN p_mulhhuN \
+  p_mulsRN p_muluRN \
+  p_mulhhsRN p_mulhhuRN \
+
+rv32uxpulpmulrnhi_p_tests = $(addprefix rv32uxpulpmulrnhi-p-, $(rv32uxpulpmulrnhi_sc_tests))
+# rv32uxpulpmulrnhi_v_tests = $(addprefix rv32uxpulpmulrnhi-v-, $(rv32uxpulpmulrnhi_sc_tests))
+
+spike32_tests += $(rv32uxpulpmulrnhi_p_tests) # $(rv32uxpulpmulrnhi_v_tests)

@@ -1,0 +1,23 @@
+#=======================================================================
+# Makefrag for rv32uxpulpvect tests
+#-----------------------------------------------------------------------
+
+rv32uxpulpvectcomplex_sc_tests = \
+	pv_cplxconj_h \
+  pv_subrotmj_h \
+  pv_subrotmj_h_div2 \
+  pv_subrotmj_h_div4 \
+  pv_subrotmj_h_div8 \
+  pv_cplxmul_h_r \
+  pv_cplxmul_h_r_div2 \
+  pv_cplxmul_h_r_div4 \
+  pv_cplxmul_h_r_div8 \
+  pv_cplxmul_h_i \
+  pv_cplxmul_h_i_div2 \
+  pv_cplxmul_h_i_div4 \
+  pv_cplxmul_h_i_div8 \
+
+rv32uxpulpvectcomplex_p_tests = $(addprefix rv32uxpulpvectcomplex-p-, $(rv32uxpulpvectcomplex_sc_tests))
+rv32uxpulpvectcomplex_v_tests = $(addprefix rv32uxpulpvectcomplex-v-, $(rv32uxpulpvectcomplex_sc_tests))
+
+spike32_tests += $(rv32uxpulpvectcomplex_p_tests) $(rv32uxpulpvectcomplex_v_tests)

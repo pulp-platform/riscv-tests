@@ -27,16 +27,22 @@ include $(src_dir)/rv32ud/Makefrag
 include $(src_dir)/rv32uzfh/Makefrag
 include $(src_dir)/rv32si/Makefrag
 include $(src_dir)/rv32mi/Makefrag
+include $(src_dir)/rv32uxpulphwloop/Makefrag
 include $(src_dir)/rv32uxpulpabs/Makefrag
 include $(src_dir)/rv32uxpulpbitop/Makefrag
+# include $(src_dir)/rv32uxpulpbitrev/Makefrag # xpulpbitrev is missing from gcc -> can't compile
 include $(src_dir)/rv32uxpulpbr/Makefrag
 include $(src_dir)/rv32uxpulpclip/Makefrag
 include $(src_dir)/rv32uxpulpmacsi/Makefrag
+include $(src_dir)/rv32uxpulpmulrnhi/Makefrag
+include $(src_dir)/rv32uxpulpmacrnhi/Makefrag
+include $(src_dir)/rv32uxpulpaddsubrn/Makefrag
 include $(src_dir)/rv32uxpulpminmax/Makefrag
 include $(src_dir)/rv32uxpulppostmod/Makefrag
 include $(src_dir)/rv32uxpulpslet/Makefrag
 include $(src_dir)/rv32uxpulpvect/Makefrag
 include $(src_dir)/rv32uxpulpvectshufflepack/Makefrag
+include $(src_dir)/rv32uxpulpvectcomplex/Makefrag
 
 default: all
 
@@ -54,8 +60,8 @@ SPIKE_INSTALL_DIR ?= $(INSTALL_DIR)/riscv-isa-sim
 RISCV_PREFIX ?= riscv$(XLEN)-unknown-elf-
 RISCV_GCC ?= $(RISCV_PREFIX)gcc
 RISCV_GCC_OPTS ?= -static -mcmodel=medany -fvisibility=hidden -nostdlib -nostartfiles
-# TODO: update with new compiler which separates Xpulp partitions
-RISCV_OBJDUMP ?= $(RISCV_PREFIX)objdump --disassembler-option="march=rv32gXpulpimg" --disassemble-all --disassemble-zeroes --section=.text --section=.text.startup --section=.text.init --section=.data
+# --disassembler-option="march=rv32gx..." is not necessary, it can read it from the obj-header
+RISCV_OBJDUMP ?= $(RISCV_PREFIX)objdump --disassemble-all --disassemble-zeroes --section=.text --section=.text.startup --section=.text.init --section=.data
 RISCV_SIM ?= spike
 
 vpath %.S $(src_dir)
@@ -77,7 +83,7 @@ vpath %.S $(src_dir)
 define compile_template
 
 $$($(1)_p_tests): $(1)-p-%: $(1)/%.S
-	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(src_dir)/../env/p -I$(src_dir)/macros/scalar -T$(src_dir)/../env/p/link.ld $$< -o $$@
+	$$(RISCV_GCC) $(2) $$(RISCV_GCC_OPTS) -I$(src_dir)/../env/p -I$(src_dir)/macros/scalar -T$(src_dir)/../env/p/link.ld $(src_dir)/../env/encoding.h $$< -o $$@
 $(1)_tests += $$($(1)_p_tests)
 
 $$($(1)_v_tests): $(1)-v-%: $(1)/%.S
@@ -107,16 +113,22 @@ $(eval $(call compile_template,rv32ud,-march=rv32g -mabi=ilp32))
 $(eval $(call compile_template,rv32uzfh,-march=rv32g_zfh -mabi=ilp32))
 $(eval $(call compile_template,rv32si,-march=rv32g -mabi=ilp32))
 $(eval $(call compile_template,rv32mi,-march=rv32g -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpabs,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpbitop,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpbr,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpclip,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpmacsi,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpminmax,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulppostmod,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpslet,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpvect,-march=rv32gXpulpimg -mabi=ilp32))
-$(eval $(call compile_template,rv32uxpulpvectshufflepack,-march=rv32gXpulpimg -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulphwloop,-march=rv32gxpulphwloop -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpabs,-march=rv32gxpulpabs -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpbitop,-march=rv32gxpulpbitop -mabi=ilp32))
+# $(eval $(call compile_template,rv32uxpulpbitrev,-march=rv32gxpulpbitrev -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpbr,-march=rv32gxpulpbr -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpclip,-march=rv32gxpulpclip -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpmacsi,-march=rv32gxpulpmacsi -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpmulrnhi,-march=rv32gxpulpmulrnhi -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpmacrnhi,-march=rv32gxpulpmacrnhi -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpaddsubrn,-march=rv32gxpulpaddsubrn -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpminmax,-march=rv32gxpulpminmax -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulppostmod,-march=rv32gxpulppostmod -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpslet,-march=rv32gxpulpslet -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpvect,-march=rv32gxpulpvect -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpvectshufflepack,-march=rv32gxpulpvectshufflepack -mabi=ilp32))
+$(eval $(call compile_template,rv32uxpulpvectcomplex,-march=rv32gxpulpvectcomplex -mabi=ilp32))
 
 ifeq ($(XLEN),64)
 $(eval $(call compile_template,rv64ui,-march=rv64g -mabi=lp64))
